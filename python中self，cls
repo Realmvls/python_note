@@ -1,0 +1,27 @@
+ python中self，cls
+
+普通的方法，第一个参数需要是self，它表示一个具体的实例本身。
+如果用了staticmethod，那么就可以无视这个self，而将这个方法当成一个普通的函数使用。
+而对于classmethod，它的第一个参数不是self，是cls，它表示这个类本身。
+>>> class A(object):
+    def foo1(self):
+        print "Hello",self
+    @staticmethod
+    def foo2():
+        print "hello"
+    @classmethod
+    def foo3(cls):
+        print "hello",cls
+
+       
+>>> a = A()
+>>> a.foo1()          #最常见的调用方式，但与下面的方式相同
+Hello <__main__.A object at 0x9f6abec>
+>>> A.foo1(a)         #这里传入实例a，相当于普通方法的self
+Hello <__main__.A object at 0x9f6abec>
+>>> A.foo2()          #这里，由于静态方法没有参数，故可以不传东西
+hello
+>>> A.foo3()          #这里，由于是类方法，因此，它的第一个参数为类本身。
+hello <class '__main__.A'>
+>>> A                 #可以看到，直接输入A，与上面那种调用返回同样的信息。
+<class '__main__.A'>
